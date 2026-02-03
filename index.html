@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECN Professional Form</title>
+    
+    <style>
+        :root {
+            --border-color: #d1d5db;
+            --label-color: #374151;
+            --input-bg: #ffffff;
+            --focus-color: #2563eb;
+            --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #f3f4f6;
+            padding: 20px;
+            padding-bottom: 100px; 
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            color: #1f2937;
+        }
+
+        /* Main Paper Container */
+        .form-container {
+            background-color: white;
+            width: 100%;
+            max-width: 950px;
+            padding: 25px 35px; 
+            padding-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- PROFESSIONAL HEADER --- */
+        .main-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            border-bottom: 2px solid #111;
+            padding-bottom: 8px; 
+            margin-bottom: 15px; 
+        }
+        .main-header-row h1 {
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            color: #111;
+            letter-spacing: 0.5px;
+            font-weight: 800;
+        }
+        .logo-area {
+            height: 45px; 
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; 
+        }
+        .logo-area img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        /* Typography & Inputs */
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 3px;
+            color: var(--label-color);
+            line-height: 1.3;
+        }
+
+        /* Input Styles */
+        input[type="text"], input[type="date"], select, textarea {
+            padding: 5px 8px; 
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            font-size: 14px;
+            background-color: var(--input-bg);
+            font-family: var(--font-family);
+            color: #111;
+            transition: border-color 0.2s, box-shadow 0.2s, width 0.1s ease;
+            max-width: 100%; 
+        }
+        
+        input[type="text"] {
+            min-width: 100px; 
+            width: auto;      
+            display: block;   
+        }
+
+        select, input[type="date"] {
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--focus-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea { 
+            resize: none; 
+            min-height: 40px; 
+            overflow-y: hidden; 
+            width: 100%; 
+        } 
+
+        select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-position: right 10px center;
+            background-repeat: no-repeat;
+            background-size: 14px;
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 30px;
+        }
+
+        /* Layout Grids */
+        .row-group { margin-bottom: 12px; } 
+        
+        .header-row { display: flex; justify-content: space-between; align-items: flex-end; }
+        .header-group { display: flex; flex-direction: column; gap: 4px; }
+        
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        
+        .grid-inventory { 
+            display: grid; 
+            grid-template-columns: auto auto 1fr 1fr; 
+            gap: 10px; 
+        }
+        
+        .part-change-row { display: grid; grid-template-columns: 0.8fr 1.5fr 1.5fr; gap: 10px; align-items: start; }
+        
+        .small-select { width: 80px !important; }
+
+        /* Impact Box */
+        #impactDynamicContainer {
+            margin-top: 5px;
+            padding: 8px;
+            background-color: #fffbeb;
+            border-left: 4px solid #fbbf24;
+            display: none; 
+            border-radius: 4px;
+        }
+        .impact-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+        .impact-msg-box {
+            font-weight: 700;
+            color: #b45309;
+            font-size: 15px;
+        }
+
+        /* Editor */
+        .editor-wrapper { margin-bottom: 15px; }
+        .simple-toolbar {
+            background: #f9fafb;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            padding: 5px;
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            gap: 8px;
+        }
+        .simple-toolbar button {
+            background: white;
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+            padding: 3px 8px;
+            font-weight: 600;
+            font-size: 13px;
+            border-radius: 3px;
+            color: #374151;
+        }
+        .simple-toolbar button:hover { background: #e5e7eb; }
+        .simple-editor-content {
+            border: 1px solid var(--border-color);
+            border-radius: 0 0 4px 4px;
+            min-height: 100px; 
+            padding: 8px;
+            background: white;
+            font-family: var(--font-family);
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+        }
+        .simple-editor-content:focus {
+            outline: none;
+            border-color: var(--focus-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+        .simple-editor-content table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        .simple-editor-content td, .simple-editor-content th { border: 1px solid #000; padding: 5px; vertical-align: top; }
+
+        /* Signatures */
+        .signature-wrapper {
+            border: 1px solid var(--border-color);
+            background: #fafafa;
+            height: 34px; 
+            border-radius: 3px;
+        }
+        .signature-wrapper.ceo-size { height: 70px; }
+
+        /* Approvals */
+        .initiator-section {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 10px;
+            margin: 15px 0; 
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .approval-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1.5fr 1fr;
+            gap: 10px;
+            margin-bottom: 8px;
+            align-items: end;
+        }
+        .approval-title {
+            font-weight: 700; 
+            font-size: 13px; 
+            margin-bottom: 8px; 
+            color: #374151;
+            text-decoration: underline;
+            text-decoration-color: #d1d5db;
+            text-underline-offset: 4px;
+        }
+
+        /* EMS Table */
+        .ems-container {
+            margin-top: 20px; 
+            display: grid;
+            grid-template-columns: 3.5fr 1.2fr;
+            gap: 10px;
+            align-items: start;
+        }
+        .ems-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            table-layout: fixed; 
+        }
+        .ems-table th, .ems-table td {
+            border: 1px solid #374151;
+            padding: 5px;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+        .ems-table th {
+            background: #f3f4f6;
+            font-weight: 700;
+            color: #111;
+            text-align: left;
+        }
+        .ems-table textarea.table-input {
+            border: none;
+            padding: 0;
+            background: transparent;
+            font-family: var(--font-family);
+            font-size: 13px;
+            width: 100%;
+            resize: none; 
+            min-height: 22px;
+            line-height: 1.4;
+        }
+        .ems-table textarea.table-input:focus { box-shadow: none; }
+
+        /* Checkboxes */
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 8px 0;
+            background: #f9fafb;
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+        }
+        .checkbox-group { display: flex; gap: 20px; align-items: center; }
+        .checkbox-label { display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; font-size: 14px; }
+        .checkbox-label input { width: 16px; height: 16px; margin: 0; cursor: pointer; }
+
+        /* DOCUMENT FOOTER (WEB VIEW) */
+        .doc-footer {
+            margin-top: 30px;
+            border-top: 2px solid #111;
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        /* ACTION BAR (Buttons) */
+        .action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #1f2937;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .btn { padding: 10px 25px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 14px; letter-spacing: 0.5px; transition: transform 0.1s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-pdf { background-color: #ef4444; color: white; }
+        .btn-submit { background-color: #10b981; color: white; }
+        .btn-clear { background-color: #f59e0b; color: white; }
+
+        /* Hidden Width Machine */
+        #width-machine {
+            position: absolute;
+            visibility: hidden;
+            height: auto;
+            width: auto;
+            white-space: nowrap; 
+            font-family: var(--font-family);
+            font-size: 14px; 
+            padding: 0 10px; 
+        }
+
+        /* ========================================================================= */
+        /* PDF / PRINT MODE                                                          */
+        /* ========================================================================= */
+        @media print {
+            /* FIX: Adjusted margins.
+               '15mm' bottom margin creates just enough space for the footer to exist 
+               without cutting into the content, but eliminates the large gap.
+            */
+            @page { 
+                margin: 10mm 12mm 15mm 12mm; /* Top, Right, Bottom (1.5cm), Left */
+                size: A4 portrait; 
+            }
+            
+            body { 
+                background: white; 
+                padding: 0; 
+                margin: 0; 
+                -webkit-print-color-adjust: exact; 
+                color: #000;
+                font-size: 11px; 
+            }
+
+            .form-container { 
+                box-shadow: none; 
+                max-width: 100%; 
+                padding: 0; 
+                margin: 0; 
+                width: 100%; 
+                border: none;
+                padding-bottom: 0; 
+            }
+
+            /* Hide UI Elements */
+            .action-bar, .simple-toolbar { display: none !important; }
+            
+            /* Typography */
+            h1 { font-size: 20px; color: #000; margin-bottom: 5px; }
+            label { color: #000; font-weight: 700; font-size: 10px; margin-bottom: 1px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+            /* Inputs */
+            input[type="text"], input[type="date"], select {
+                border: none;
+                border-bottom: 1px solid #000; 
+                background: transparent !important;
+                padding: 2px 0;
+                border-radius: 0;
+                color: #000;
+                font-weight: normal; 
+                box-shadow: none;
+                height: auto;
+                margin-bottom: 5px;
+                font-size: 11px;
+                width: auto !important; 
+                min-width: 50px; 
+                max-width: none;
+            }
+
+            textarea {
+                border: 1px solid #ccc; 
+                background: transparent;
+                color: #000;
+                border-radius: 2px;
+                padding: 4px;
+                font-size: 11px;
+            }
+
+            /* Editor & Tables */
+            .simple-editor-content { border: 1px solid #000 !important; padding: 6px !important; min-height: auto; border-radius: 0; }
+            .ems-table th { background-color: #eee !important; color: #000; border: 1px solid #000; font-size: 10px; }
+            .ems-table td { border: 1px solid #000; padding: 4px; }
+            
+            #impactDynamicContainer { border: 1px solid #000; padding: 6px; background-color: transparent !important; }
+
+            /* FIXED FOOTER - Adjusted for Professional/Simple Look */
+            .doc-footer { 
+                position: fixed; 
+                bottom: 0; 
+                left: 0;
+                width: 100%;
+                /* Tight padding for professional appearance */
+                padding: 4px 12mm 4px 12mm; 
+                border-top: 2px solid #000; 
+                color: #000;
+                background: white; 
+                z-index: 9999;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<span id="width-machine"></span>
+
+<div class="form-container" id="printableArea">
+    <form id="ecnForm">
+        
+        <div class="main-header-row">
+            <h1>Engineering Change Notice</h1>
+            <div class="logo-area">
+                <img src="https://jairamdas.sharepoint.com/:i:/s/infomartecn/IQDQpPhPCpf3RK8mGZACwMwCAa116k_haNK_7r5nPXaiV0A?e=MD28ND" alt="COMPANY LOGO">
+            </div>
+        </div>
+
+        <div class="row-group header-row">
+            <div class="header-group">
+                <label>ECN No.</label>
+                <input type="text" id="ecnInput" placeholder="Enter ECN No." class="dynamic-input">
+            </div>
+            <div class="header-group">
+                <label>Date</label>
+                <input type="date" style="width: 150px;">
+            </div>
+        </div>
+
+        <div class="row-group grid-3">
+            <div><label>Product model or Doc. No.</label><input type="text" class="dynamic-input"></div>
+            <div><label>Specific part or Drawing No.</label><input type="text" class="dynamic-input"></div>
+            <div><label>Part description</label><input type="text" class="dynamic-input"></div>
+        </div>
+
+        <div class="row-group grid-3">
+            <div>
+                <label>What is affected</label>
+                <select><option disabled selected></option><option>Infomart Part Number</option><option>Manufacturer Part Number</option><option>Schematic</option><option>BOM/AVL</option><option>Process/Other</option></select>
+            </div>
+            <div>
+                <label>Type of action</label>
+                <select><option disabled selected></option><option>New</option><option>Deprecate</option><option>Replace</option><option>Update</option></select>
+            </div>
+            <div>
+                <label>Impact level</label>
+                <select id="impactSelect" onchange="handleImpactChange()">
+                    <option disabled selected></option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="impactDynamicContainer" class="row-group">
+            <div class="impact-content">
+                <div>
+                    <label>Required action:</label>
+                    <div id="impactMsgBox" class="impact-msg-box"></div>
+                </div>
+                <div>
+                    <label>Checked by:</label>
+                    <input type="text" placeholder="Name" class="dynamic-input">
+                </div>
+                <div id="impactAttachmentDiv" style="display:none;">
+                    <label>Attachment:</label>
+                    <input type="file">
+                </div>
+            </div>
+        </div>
+
+        <div class="row-group grid-3">
+            <div><label>Change start date</label><input type="date"></div>
+            <div>
+                <label>Type of change</label>
+                <select><option disabled selected></option><option>Permanent</option><option>Temporary</option><option>One-Time</option></select>
+            </div>
+            <div><label>If temporary, change end date</label><input type="date"></div>
+        </div>
+
+        <div class="checkbox-row row-group">
+            <label style="margin-bottom:0; margin-right:10px;">Change required for:</label>
+            <div class="checkbox-group">
+                <label class="checkbox-label"><input type="checkbox"> Prototype</label>
+                <label class="checkbox-label"><input type="checkbox"> Preproduction</label>
+                <label class="checkbox-label"><input type="checkbox"> Production</label>
+            </div>
+        </div>
+
+        <div class="row-group">
+            <label>Reason for change</label>
+            <textarea class="auto-expand" style="width:100%;" placeholder="Briefly describe the reason..."></textarea>
+        </div>
+
+        <div class="editor-wrapper row-group">
+            <label>Description of change</label>
+            <div class="simple-toolbar">
+                <button type="button" onclick="document.execCommand('bold',false,null)">B</button>
+                <button type="button" onclick="document.execCommand('italic',false,null)">I</button>
+                <button type="button" onclick="document.execCommand('underline',false,null)">U</button>
+                <button type="button" onclick="document.execCommand('insertUnorderedList',false,null)">• List</button>
+                <button type="button" onclick="document.execCommand('insertOrderedList',false,null)">1. List</button>
+                <div style="margin-left:auto; font-size:12px; color:#666; padding-top:4px;">* Paste Excel/Word Tables below</div>
+            </div>
+            <div id="editor" class="simple-editor-content" contenteditable="true"></div>
+            <input type="hidden" name="descriptionContent" id="descriptionContent">
+        </div>
+
+        <div class="row-group grid-inventory">
+            <div>
+                <label>Input inventory impact</label>
+                <select>
+                    <option disabled selected></option>
+                    <option>No existing input inventory</option>
+                    <option>Divert existing input inventory</option>
+                    <option>Utilise existing input inventory</option>
+                    <option>Scrap existing input inventory</option>
+                </select>
+            </div>
+            <div>
+                <label>Finished products stock impact</label>
+                <select>
+                    <option disabled selected></option>
+                    <option>No impact</option>
+                    <option>No existing finished products Stock</option>
+                    <option>Repair existing finished products stock</option>
+                    <option>Scrap existing finished products stock</option>
+                    <option>Repair existing F.P. stock and recalled F.P.</option>
+                    <option>Scrap existing F.P. stock and destroy F.P.</option>
+                    <option>Utilise and exhaust existing F.P.</option>
+                </select>
+            </div>
+            <div>
+                <label>Cost impact</label>
+                <select>
+                    <option disabled selected></option>
+                    <option>None</option>
+                    <option>Decrease</option>
+                    <option>Increase</option>
+                </select>
+            </div>
+            <div>
+                <label>Schedule impact</label>
+                <select>
+                    <option disabled selected></option>
+                    <option>None</option>
+                    <option>Advance</option>
+                    <option>Delay</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row-group part-change-row">
+            <div>
+                <label>Is there vender part number change?</label>
+                <select class="small-select">
+                    <option disabled selected></option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <div><label>Old part number (with vender name)</label><input type="text" class="dynamic-input"></div>
+            <div><label>New part number (with vender name)</label><input type="text" class="dynamic-input"></div>
+        </div>
+        <div class="row-group part-change-row">
+            <div>
+                <label>Infomart finished part number change?</label>
+                <select class="small-select">
+                    <option disabled selected></option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+            <div><label>Old part number</label><input type="text" class="dynamic-input"></div>
+            <div><label>New part number</label><input type="text" class="dynamic-input"></div>
+        </div>
+
+        <div class="initiator-section">
+            <div><label>Initiator name</label><input type="text" class="dynamic-input"></div>
+            <div><label>Department</label><select><option disabled selected></option><option>MGMT</option><option>R+D</option><option>Project</option><option>ENGG</option><option>QA</option><option>MFG</option><option>Sales</option><option>Marketing</option><option>FIN</option><option>Other</option></select></div>
+            <div><label>Date</label><input type="date"></div>
+            <div>
+                <label>Signature</label>
+                <div class="signature-wrapper"></div>
+            </div>
+        </div>
+
+        <div class="approval-title">(To be filled by QA Management) Comments (if any) on approval or reason for Disapproval.</div>
+        
+        <div class="approval-grid">
+            <div><label>Engineering / R & D Name</label><input type="text" class="dynamic-input"></div>
+            <div><label>Signature</label><div class="signature-wrapper"></div></div>
+            <div><label>Date</label><input type="date"></div>
+        </div>
+
+        <div class="approval-grid">
+            <div><label>Administration / Stores / ERP Name</label><input type="text" class="dynamic-input"></div>
+            <div><label>Signature</label><div class="signature-wrapper"></div></div>
+            <div><label>Date</label><input type="date"></div>
+        </div>
+
+        <div class="approval-grid">
+            <div><label>QA Management REP Name</label><input type="text" class="dynamic-input"></div>
+            <div><label>Signature</label><div class="signature-wrapper"></div></div>
+            <div><label>Date</label><input type="date"></div>
+        </div>
+
+        <div class="ems-container">
+            <div>
+                <table class="ems-table">
+                    <thead>
+                        <tr>
+                            <th colspan="4" style="text-align:center; background-color: #f3f4f6;">EMS CORRECTIVE ACTION (EMS to affect this ECN changes and return signed copy)</th>
+                        </tr>
+                        <tr>
+                            <th style="width: 15%;">EMS Name</th>
+                            <th style="width: 35%;">EPR/Process/SOP/QC details</th>
+                            <th style="width: 30%;">Doc ref No. & EMS Approval</th>
+                            <th style="width: 20%;">EMS Approval</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><textarea class="table-input auto-expand" rows="1"></textarea></td>
+                            <td><textarea class="table-input auto-expand" rows="1"></textarea></td>
+                            <td><textarea class="table-input auto-expand" rows="1"></textarea></td>
+                            <td><textarea class="table-input auto-expand" rows="1"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <label>CEO Signature</label>
+                <div class="signature-wrapper ceo-size"></div>
+            </div>
+        </div>
+
+        <div class="doc-footer">
+            <span style="flex:1;">FORM: <span id="footerEcn">_______</span></span>
+            <span style="flex:1; text-align:center;">Rev: 1.0</span>
+            <span style="flex:1; text-align:right;">Last revised Feb 2026</span>
+        </div>
+
+    </form>
+</div>
+
+<div class="action-bar">
+    <button class="btn btn-clear" onclick="clearForm()">Reset / Clear</button>
+    <button class="btn btn-pdf" onclick="generatePDF()">Download PDF</button>
+    <button class="btn btn-submit" onclick="submitForm()">Submit Form</button>
+</div>
+
+<script>
+    // ---------------------------------------------------------
+    // 1. AUTO-RESIZE FOR TEXTAREAS (HEIGHT)
+    // ---------------------------------------------------------
+    document.addEventListener('input', function (event) {
+        if (event.target.tagName.toLowerCase() === 'textarea') {
+            autoResizeHeight(event.target);
+        }
+    });
+
+    function autoResizeHeight(el) {
+        el.style.height = 'auto';
+        el.style.height = el.scrollHeight + 'px';
+    }
+
+    // ---------------------------------------------------------
+    // 2. AUTO-RESIZE FOR INPUTS (WIDTH)
+    // ---------------------------------------------------------
+    const measureSpan = document.getElementById('width-machine');
+    
+    function resizeInputWidth(input) {
+        measureSpan.textContent = input.value || input.getAttribute('placeholder') || "MMMMMMMM"; 
+        const newWidth = measureSpan.offsetWidth + 25;
+        input.style.width = newWidth + 'px';
+    }
+
+    document.querySelectorAll('input[type="text"]').forEach(input => {
+        resizeInputWidth(input);
+        input.addEventListener('input', () => resizeInputWidth(input));
+    });
+
+    // ---------------------------------------------------------
+    // 3. FOOTER SYNC LOGIC
+    // ---------------------------------------------------------
+    document.getElementById('ecnInput').addEventListener('input', function(e) {
+        const val = e.target.value;
+        document.getElementById('footerEcn').innerText = val ? val : "_______";
+    });
+
+    // ---------------------------------------------------------
+    // 4. IMPACT DROPDOWN LOGIC
+    // ---------------------------------------------------------
+    function handleImpactChange() {
+        const select = document.getElementById('impactSelect');
+        const container = document.getElementById('impactDynamicContainer');
+        const msgBox = document.getElementById('impactMsgBox');
+        const attachmentDiv = document.getElementById('impactAttachmentDiv');
+        const val = select.value;
+
+        if(!val) {
+            container.style.display = 'none';
+            return;
+        }
+
+        container.style.display = 'block';
+        attachmentDiv.style.display = 'none'; 
+
+        switch(val) {
+            case 'Low': msgBox.innerText = "Data sheet Check"; break;
+            case 'Medium': msgBox.innerText = "Analyse the Data sheet"; break;
+            case 'High': msgBox.innerText = "Detailed Analysis"; break;
+            case 'Critical':
+                msgBox.innerText = "Analysis with Notation Attached";
+                attachmentDiv.style.display = 'block';
+                break;
+            default: container.style.display = 'none';
+        }
+    }
+
+    // ---------------------------------------------------------
+    // 5. ACTION FUNCTIONS
+    // ---------------------------------------------------------
+    function generatePDF() {
+        window.print();
+    }
+
+    function clearForm() {
+        if(confirm("Are you sure you want to clear the entire form?")) {
+            document.getElementById("ecnForm").reset();
+            document.getElementById('editor').innerHTML = '';
+            document.getElementById('impactDynamicContainer').style.display = 'none';
+            document.getElementById('footerEcn').innerText = "_______";
+            
+            // Reset textarea heights
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(t => { t.value = ''; t.style.height = 'auto'; });
+            
+            // Reset input widths
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                resizeInputWidth(input);
+            });
+        }
+    }
+
+    function submitForm() {
+        const editorContent = document.getElementById('editor').innerHTML;
+        document.getElementById('descriptionContent').value = editorContent;
+        alert("Form Ready for Submission!");
+    }
+</script>
+
+</body>
+</html>
