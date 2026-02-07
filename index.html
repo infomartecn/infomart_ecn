@@ -162,7 +162,7 @@
         }
         .impact-content {
             display: grid;
-            grid-template-columns: 3fr 1fr; /* UPDATED: Changed to 2 columns to fill space without attachment */
+            grid-template-columns: 3fr 1fr; 
             gap: 20px;
             align-items: center;
         }
@@ -207,14 +207,6 @@
         }
         .simple-editor-content table { border-collapse: collapse; width: 100%; margin: 10px 0; }
         .simple-editor-content td, .simple-editor-content th { border: 1px solid #000; padding: 5px; vertical-align: top; }
-
-        /* Signatures */
-        .signature-wrapper {
-            border: 1px solid var(--border-color);
-            background: #fafafa;
-            height: 34px; 
-            border-radius: 3px;
-        }
 
         /* Approvals */
         .initiator-section {
@@ -352,7 +344,6 @@
             z-index: 1000;
         }
         .btn { padding: 10px 25px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 14px; letter-spacing: 0.5px; transition: transform 0.1s; }
-        .btn-preview { background-color: #ef4444; color: white; }
         .btn-download { background-color: #10b981; color: white; }
         .btn-save { background-color: #3b82f6; color: white; }
         .btn-clear { background-color: #f59e0b; color: white; }
@@ -378,12 +369,9 @@
         .report-table { display: block; width: 100%; }
         .report-thead { display: block; width: 100%; }
         .report-tbody { display: block; width: 100%; }
-        /* TFOOT Removed as per request */
         .report-tr    { display: block; width: 100%; }
         .report-td    { display: block; width: 100%; }
         
-        /* Footer removed */
-
 
         /* ========================================================================= */
         /* PDF / PRINT MODE                                                          */
@@ -401,7 +389,6 @@
                 -webkit-print-color-adjust: exact; 
                 color: #000;
                 font-size: 11px;
-                /* PADDING ADDED AS REQUESTED */
                 padding-bottom: 100px; 
             }
 
@@ -412,7 +399,6 @@
                 margin: 0; 
                 width: 100%; 
                 border: none;
-                /* PADDING ADDED AS REQUESTED */
                 padding-bottom: 70px !important; 
                 display: block; 
             }
@@ -520,83 +506,6 @@
                 break-inside: avoid;
             }
         }
-
-        /* ========================================================================= */
-        /* PREVIEW MODE CLASS (Simulates Print)                                      */
-        /* ========================================================================= */
-        body.preview-mode {
-            background: #525659; 
-            padding: 20px; 
-            margin: 0; 
-            color: #000;
-            font-size: 11px; 
-        }
-
-        body.preview-mode .form-container { 
-            box-shadow: 0 0 10px rgba(0,0,0,0.5); 
-            max-width: 210mm; 
-            min-height: 297mm;
-            padding: 10mm 12mm 10mm 12mm; 
-            padding-bottom: 70px !important; /* Visual padding for preview */
-            margin: 0 auto; 
-            width: 100%; 
-            border: none;
-            display: block; 
-        }
-
-        body.preview-mode .report-table { display: table; width: 100%; }
-        body.preview-mode .report-thead { display: table-header-group; }
-        body.preview-mode .report-tbody { display: table-row-group; }
-        body.preview-mode .report-tr    { display: table-row; }
-        body.preview-mode .report-td    { display: table-cell; }
-
-        body.preview-mode .simple-toolbar { display: none !important; }
-        body.preview-mode h1 { font-size: 20px; color: #000; margin-bottom: 5px; }
-        body.preview-mode label { color: #000; font-weight: 700; font-size: 10px; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        body.preview-mode input[type="date"], 
-        body.preview-mode textarea, 
-        body.preview-mode .dynamic-textarea {
-            border: none !important; 
-            background: transparent !important;
-            padding: 0;
-            border-radius: 0;
-            color: #000;
-            font-weight: normal; 
-            box-shadow: none !important;
-            font-size: 11px;
-            resize: none; 
-            overflow: hidden;
-        }
-
-        body.preview-mode select, body.preview-mode .dual-select { display: none !important; }
-        body.preview-mode .print-value-display, body.preview-mode .custom-print-display { display: block !important; }
-        body.preview-mode .checkbox-row { border: none; padding: 0; background: none; }
-        body.preview-mode .simple-editor-content { 
-            border: 1px solid #000 !important; 
-            padding: 6px !important; 
-            min-height: auto; 
-            border-radius: 0; 
-        }
-        body.preview-mode .ems-table th { background-color: #eee !important; color: #000; border: 1px solid #000; font-size: 10px; }
-        body.preview-mode .ems-table td { border: 1px solid #000; padding: 4px; }
-        body.preview-mode #impactDynamicContainer { border: 1px solid #000; padding: 6px; background-color: transparent !important; }
-        body.preview-mode .distribution-box { border: 0.7px solid #000 !important; }
-        body.preview-mode .dist-title { color: #000 !important; font-weight: 800 !important; }
-        body.preview-mode .dist-flex { color: #000 !important; }
-        body.preview-mode .dist-separator { background-color: #000 !important; }
-
-        /* --- HEADER ROW FIX FOR PREVIEW --- */
-        body.preview-mode .header-row {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: flex-end !important;
-        }
-
-        body.preview-mode .grid-3, body.preview-mode .grid-4 { display: grid !important; gap: 10px !important; }
-        body.preview-mode .action-bar { display: flex !important; }
-        body.preview-mode .row-group { margin-bottom: 8px !important; }
-
     </style>
 </head>
 <body>
@@ -612,7 +521,7 @@
                         <div class="main-header-row">
                             <h1>Engineering Change Notice</h1>
                             <div class="logo-area">
-                                <img src="https://jairamdas.sharepoint.com/sites/infomartecn/SiteAssets/logo.png" alt="COMPANY LOGO">
+                                <img src="https://jairamdas.sharepoint.com/sites/infomartecn/Shared%20Documents/logo.png" alt="COMPANY LOGO">
                             </div>
                         </div>
                     </td>
@@ -804,10 +713,10 @@
                         <div class="initiator-section">
                             <div><label>Initiator name</label><textarea class="dynamic-textarea" rows="1"></textarea></div>
                             <div><label>Department</label><select><option disabled selected></option><option>MGMT</option><option>R+D</option><option>Project</option><option>ENGG</option><option>QA</option><option>MFG</option><option>Sales</option><option>Marketing</option><option>FIN</option><option>Other</option></select></div>
-                            <div><label>Date</label><input type="date"></div>
+                            <div><label>Date</label><div class="dynamic-textarea"></div></div>
                             <div>
                                 <label>Signature</label>
-                                <div class="signature-wrapper"></div>
+                                <div class="dynamic-textarea"></div>
                             </div>
                         </div>
 
@@ -815,20 +724,20 @@
                         
                         <div class="approval-grid">
                             <div><label>Engineering / R & D Name</label><textarea class="dynamic-textarea" rows="1"></textarea></div>
-                            <div><label>Signature</label><div class="signature-wrapper"></div></div>
-                            <div><label>Date</label><div class="signature-wrapper"></div></div>
+                            <div><label>Signature</label><div class="dynamic-textarea"></div></div>
+                            <div><label>Date</label><div class="dynamic-textarea"></div></div>
                         </div>
 
                         <div class="approval-grid">
                             <div><label>Administration / Stores / ERP Name</label><textarea class="dynamic-textarea" rows="1"></textarea></div>
-                            <div><label>Signature</label><div class="signature-wrapper"></div></div>
-                            <div><label>Date</label><div class="signature-wrapper"></div></div>
+                            <div><label>Signature</label><div class="dynamic-textarea"></div></div>
+                            <div><label>Date</label><div class="dynamic-textarea"></div></div>
                         </div>
 
                         <div class="approval-grid">
                             <div><label>QA Management REP Name</label><textarea class="dynamic-textarea" rows="1"></textarea></div>
-                            <div><label>Signature</label><div class="signature-wrapper"></div></div>
-                            <div><label>Date</label><div class="signature-wrapper"></div></div>
+                            <div><label>Signature</label><div class="dynamic-textarea"></div></div>
+                            <div><label>Date</label><div class="dynamic-textarea"></div></div>
                         </div>
 
                         <div class="distribution-box">
@@ -884,14 +793,14 @@
                         </div>
 
                         <div class="row-group grid-3" style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
-                            <div><label>Received By</label><div class="signature-wrapper"></div></div>
-                            <div><label>Signature</label><div class="signature-wrapper"></div></div>
-                            <div><label>Date</label><div class="signature-wrapper"></div></div>
+                            <div><label>Received By</label><textarea class="dynamic-textarea" rows="1"></textarea></div>
+                            <div><label>Signature</label><div class="dynamic-textarea"></div></div>
+                            <div><label>Date</label><div class="dynamic-textarea"></div></div>
                         </div>
 
                         <div class="row-group" style="display: grid; grid-template-columns: 1fr 0.5fr; gap: 15px;">
-                            <div><label>CEO Signature</label><div class="signature-wrapper" style="height: 50px;"></div></div>
-                            <div><label>Date</label><div class="signature-wrapper" style="height: 50px;"></div></div>
+                            <div><label>CEO Signature</label><div class="dynamic-textarea"></div></div>
+                            <div><label>Date</label><div class="dynamic-textarea"></div></div>
                         </div>
                         
                         </td>
@@ -905,7 +814,6 @@
 <div class="action-bar">
     <button class="btn btn-clear" onclick="clearForm()">Reset / Clear</button>
     <button class="btn btn-save" onclick="saveEditableCopy()">Save this copy</button>
-    <button class="btn btn-preview" id="btnPreview" onclick="togglePreview()">Preview</button>
     <button class="btn btn-download" onclick="generatePDF()">Download</button>
 </div>
 
@@ -1005,21 +913,13 @@
         window.print();
     }
 
-    function togglePreview() {
-        const body = document.body;
-        const btn = document.getElementById('btnPreview');
-        body.classList.toggle('preview-mode');
-        
-        if (body.classList.contains('preview-mode')) {
-            btn.textContent = "Close Preview";
-        } else {
-            btn.textContent = "Preview";
-        }
-    }
+    // Preview Function Removed
 
     function saveEditableCopy() {
-        // Prepare DOM for saving (Sync values to attributes)
+        // Freeze state for all input types
         const inputs = document.querySelectorAll('input, textarea, select');
+        
+        // 1. Sync State to DOM Attributes
         inputs.forEach(el => {
             if (el.tagName === 'INPUT') {
                  if (el.type === 'checkbox' || el.type === 'radio') {
@@ -1030,19 +930,28 @@
                  }
             } else if (el.tagName === 'TEXTAREA') {
                 el.innerHTML = el.value;
+                // REMOVE INLINE STYLES temporarily so they aren't baked into the saved file.
+                // The saved file's onload script will recalculate heights automatically.
+                el.removeAttribute('style'); 
             } else if (el.tagName === 'SELECT') {
                 const options = el.querySelectorAll('option');
                 options.forEach(opt => {
                     if (opt.selected) opt.setAttribute('selected', 'selected');
                     else opt.removeAttribute('selected');
                 });
+                // Remove invalid value attribute if present
+                el.removeAttribute('value');
             }
         });
 
-        // Get HTML content
-        const htmlContent = document.documentElement.outerHTML;
+        // 2. Capture HTML
+        // Add DOCTYPE so saved file is standard
+        const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
         
-        // Download
+        // 3. Restore Visual State for the current user (expand textareas back)
+        document.querySelectorAll('textarea').forEach(autoResizeHeight);
+
+        // 4. Download
         const blob = new Blob([htmlContent], {type: 'text/html'});
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -1071,7 +980,3 @@
 
 </body>
 </html>
-
-
-
-
